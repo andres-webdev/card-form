@@ -20,7 +20,7 @@ function App() {
 
   return (
     <main 
-      className="w-full h-auto">
+      className="w-full h-auto lg:flex lg:flex-row">
       <CardsSection />
       {
         !state.showCongrats && <FormSection showCongratsSection={handleShowCongrats} />
