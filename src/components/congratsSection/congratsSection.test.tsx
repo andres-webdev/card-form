@@ -4,7 +4,10 @@ import CongratsSection from "./CongratsSection"
 
 describe("Testing congrats section", () => {
     test("Should render congrats section", () => {
-        render(<CongratsSection />)
+
+        const fn = jest.fn()
+
+        render(<CongratsSection showFormSection={fn} />)
 
         const confirmImg = screen.getByAltText("conmfirm-img")
         const [continueBtn, backBtn] = screen.getAllByRole("button")

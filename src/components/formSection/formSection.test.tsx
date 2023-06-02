@@ -4,7 +4,10 @@ import FormSection from "./FormSection"
 
 describe("Testing cards section", () => {
     test("Should render card section", () => {
-        render(<FormSection />)
+
+        const fn = jest.fn()
+
+        render(<FormSection showCongratsSection={fn} />)
 
         const inputFields = screen.getAllByRole("textbox")
         const confirmBtn = screen.getByRole("button")
