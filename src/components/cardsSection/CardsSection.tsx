@@ -2,7 +2,7 @@
 export default function CardsSection(){
     return (
         <section 
-            className="h-60 w-screen bg-black-violet inline-block justify-center m-0 lg:w-width-section-side lg:h-screen" 
+            className="h-60 w-full bg-black-violet inline-block justify-center m-0 lg:w-width-section-side lg:h-full" 
             data-testid="cardsSection">
             <figure className="relative w-4/5 h-96 m-auto -top-20 lg:w-width-figure-card-section lg:h-height-figure-card-section lg:-left-40 lg:-top-24">
                 <div className="blur-4xl bg-blue opacity-20 w-56 h-64 absolute bottom-0 left-0 lg:opacity-10 xl:opacity-20 lg:w-width-oval-card-section lg:h-height-oval-card-section lg:top-oval-blue-card-section-top lg:left-oval-blue-card-section-left lg:rotate-45"></div>
