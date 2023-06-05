@@ -76,7 +76,7 @@ export default {
       "light-violet": 'hsl(270, 3%, 87%)',
       "dark-violet": 'hsl(279, 6%, 55%)',
       "black-violet": 'hsl(278, 68%, 11%)',
-      "inpur-error": 'hsl(0, 100%, 66%)',
+      "inpur-error": 'hsla(0, 100%, 66%, 1)',
       "gradient1": 'hsl(249, 99%, 64%)',
       "gradient2": 'hsl(278, 94%, 30%)',
       "blue": 'hsla(210, 100%, 64%, 1)',
