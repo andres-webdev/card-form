@@ -1,5 +1,10 @@
+import { CardData } from "../../types"
 
-export default function CardsSection(){
+interface CardProps {
+    cardInfo: CardData
+}
+
+export default function CardsSection({ cardInfo }: CardProps){
     return (
         <section 
             className="h-60 w-full bg-black-violet inline-block justify-center m-0 lg:w-width-section-side lg:min-h-screen" 
@@ -12,7 +17,7 @@ export default function CardsSection(){
             <div className="absolute top-8 right-4 w-small-width-card h-small-height-card lg:w-96 lg:left-12 xl:w-width-card xl:h-auto lg:top-card-back-top xl:left-card-back-left">
                 <picture className="w-full relative">
                     <img className="object-cover" src="https://res.cloudinary.com/dp3chx1yj/image/upload/v1685326419/Cards-form/bg-card-back_puwqt7.png" alt="card-back" />
-                    <h3 className="absolute top-safe-code-card-top right-safe-code-card-right font-semibold text-9px text-white tracking-widest lg:top-24 lg:right-12 lg:text-xs  xl:top-info-card-back-top xl:right-info-card-back-right xl:text-14px xl:leading-info-card-back">000</h3>
+                    <h3 className="absolute top-safe-code-card-top right-safe-code-card-right font-semibold text-9px text-white tracking-widest lg:top-24 lg:right-12 lg:text-xs  xl:top-info-card-back-top xl:right-info-card-back-right xl:text-14px xl:leading-info-card-back">{cardInfo.secureCode || '000'}</h3>
                 </picture>
             </div>
             
@@ -31,10 +36,19 @@ export default function CardsSection(){
                             </figure>
                         </div>
                         <div className="flex flex-col gap-4 lg:gap-6">
-                            <h1 className="text-white text-lg tracking-widest font-medium lg:text-2xl xl:text-28px xl: leading-infor-card-front-numbers">0000 0000 0000 0000</h1>
-                            <div className="flex justify-between">
-                                <h2 className="text-9px text-white tracking-widest font-light lg:text-14px lg:leading-info-card-back">ANDRES MARQUEZ</h2>
-                                <h2 className="text-9px text-white tracking-widest font-light lg:text-14px lg:leading-info-card-back">05/05</h2>
+                            <h1 className="text-white text-lg tracking-widest font-medium lg:text-2xl xl:text-28px xl: leading-infor-card-front-numbers">{cardInfo.cardNumber || '0000 0000 0000 0000'}</h1>
+                            <div className="flex justify-between items-center">
+                                <h2 className="text-9px truncate text-white tracking-widest font-light lg:text-14px lg:leading-info-card-back">{cardInfo.cardName || "Jane Appleseed"}</h2>
+                                <div>
+                                    <span
+                                        data-testid="expDateMonth" 
+                                        className="text-9px text-white tracking-widest font-light lg:text-14px lg:leading-info-card-back">{`${cardInfo.expiredDateMonth || '09'}/`}
+                                    </span>
+                                    <span 
+                                        data-testid="expDateYear" 
+                                        className="text-9px text-white tracking-widest font-light lg:text-14px lg:leading-info-card-back">{cardInfo.expiredDateYear || '00'}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
