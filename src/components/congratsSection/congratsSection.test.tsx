@@ -6,8 +6,9 @@ describe("Testing congrats section", () => {
     test("Should render congrats section", () => {
 
         const fn = jest.fn()
+        const fn2 = jest.fn()
 
-        render(<CongratsSection showFormSection={fn} />)
+        render(<CongratsSection showFormSection={fn} resetState={fn2} />)
 
         const confirmImg = screen.getByAltText("conmfirm-img")
         const [continueBtn, backBtn] = screen.getAllByRole("button")

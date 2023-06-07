@@ -1,8 +1,9 @@
 interface CongratsProps{
-    showFormSection: () => void
+    showFormSection: () => void,
+    resetState: () => void
 }
 
-export default function CongratsSection({showFormSection}: CongratsProps){
+export default function CongratsSection({showFormSection, resetState}: CongratsProps){
 
     const handleClick = () => {
         showFormSection()
@@ -18,10 +19,11 @@ export default function CongratsSection({showFormSection}: CongratsProps){
             >THANK YOU!</h4>
             <h5 className=" text-dark-violet text-18px leading-movil-input-text mb-12 tracking-wide">We've added your card details</h5>
             <button 
-                className="bg-black-violet w-full rounded-lg h-small-height-button text-white tracking-wider text-18px leading-movil-input-text mb-6"
+                className="bg-black-violet w-full rounded-lg h-small-height-button text-white tracking-wider text-18px leading-movil-input-text mb-6 hover:bg-gradient2 transition-all hover:ring-2 hover:ring-black-violet hover:ring-offset-2"
+                onClick={resetState}
             >Continue</button>
             <button 
-                className="tracking-wider text-base text-dark-violet"
+                className="tracking-wider text-base text-dark-violet hover:text-black-violet"
                 onClick={handleClick} 
                 data-testid="backBtn"
             >Back</button>
