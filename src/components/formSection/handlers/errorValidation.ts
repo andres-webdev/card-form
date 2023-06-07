@@ -8,9 +8,7 @@ export default function errorValidation(validation: StateValidation["validations
 
     const inputLengthValidation = cardInfo.cardNumber.length === 19 && cardInfo.expiredDateMonth.length === 2 && cardInfo.expiredDateYear.length === 2 && cardInfo.secureCode.length === 3
 
-    console.log(findBlankSpaces)
-
-    if(enableSubmitBtn === true && findBlankSpaces === true && inputLengthValidation === true){
+    if(enableSubmitBtn && findBlankSpaces && inputLengthValidation){
         showCongratsSection()
         dispatch({
             type: "blank_space",
@@ -20,12 +18,18 @@ export default function errorValidation(validation: StateValidation["validations
             type: "input_lenght",
             payload: false
         })
-    } else if(findBlankSpaces === false){
+    } else if(!findBlankSpaces){
         dispatch({
             type: "blank_space",
             payload: true
         })
-    } else if(inputLengthValidation === false){
+        if(!inputLengthValidation){
+            dispatch({
+                type: "input_lenght",
+                payload: true
+            }) 
+        }
+    } else if(!inputLengthValidation){
         dispatch({
             type: "input_lenght",
             payload: true
