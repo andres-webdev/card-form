@@ -44,3 +44,6 @@ export type InputReducerAction = {
     payload: boolean
 }
   
+export interface handlerChangeInfo {
+    handler: (event: React.ChangeEvent<HTMLInputElement>) => void
+}

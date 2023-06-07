@@ -41,7 +41,9 @@ function App() {
     }))
   }
 
-  console.log(state)
+  const resetGlobalValues = ():void => {
+    setState({data: INITIAL_STATE, showCongrats: false})
+  }
 
   return (
     <main 
@@ -51,7 +53,7 @@ function App() {
         !state.showCongrats && <FormSection showCongratsSection={handleShowCongrats} handleChange={handleChangeData} cardInfo={state.data} />
       }
       {  
-        state.showCongrats && <CongratsSection showFormSection={handleShowCongrats} />
+        state.showCongrats && <CongratsSection showFormSection={handleShowCongrats} resetState={resetGlobalValues} />
       }
     </main>
   )
