@@ -1,4 +1,4 @@
-import {render, screen} from "@testing-library/react"
+import {render, screen, waitFor} from "@testing-library/react"
 import userEvent from '@testing-library/user-event'
 import "@testing-library/jest-dom"
 import App from "../App"
@@ -23,31 +23,6 @@ describe("Testing App", () => {
         expect(formSection).toBeInTheDocument()
     })
 
-    /* test("Should render cards and congrats section", async () => {
-        render(<App />)
-
-        const cardsSection = screen.getByTestId("cardsSection")
-        const formSection = screen.getByTestId("formSection")
-        const submitBtn = screen.getByRole("button")
-
-        expect(cardsSection).toBeInTheDocument()
-        expect(formSection).toBeInTheDocument()
-
-        userEvent.click(submitBtn)
-
-        const congratsSection = await screen.findByTestId("congratsSection")
-
-        expect(congratsSection).toBeInTheDocument()
-        expect(formSection).not.toBeInTheDocument()
-
-        const backBtn = screen.getByTestId("backBtn")
-
-        userEvent.click(backBtn)
-
-        const submitSectionShow = await screen.findByTestId("formSection")
-
-        expect(submitSectionShow).toBeInTheDocument()
-    }) */
 })
 
 describe("Show info data when is submited", () => {
@@ -194,15 +169,189 @@ describe("Validate input fields", () => {
 })
 
 describe("Submit validation", () => {
-    test("Should show 4 errors messages if all input fields are empty", async () => {
-        render(<App />)
 
-        const button = screen.getByRole('button')
+    describe("Blank inputs validation", () => {
+        test("Should show 4 errors messages if all input fields are empty", async () => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            await userEvent.click(button)
+    
+            const errorMessages = screen.getAllByText("Can't be blank")
+    
+            expect(errorMessages.length).toBe(4)
+        })
 
-        await userEvent.click(button)
+        test("Should show a message if input card name is blank", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
 
-        const errorMessages = screen.getAllByText("Can't be blank")
+            const numberInput = screen.getByLabelText("CARD NUMBER", {selector: 'input'})
+            const expMonthInput = screen.getByLabelText("EXP. DATE (MM/YY)", {selector: 'input'})
+            const expYearInput = screen.getByTestId("expiredDateYear")
+            const secureCode = screen.getByLabelText("CVC", {selector: 'input'})
 
-        expect(errorMessages.length).toBe(4)
+            await userEvent.type(numberInput, '0000001223444540')
+            await userEvent.type(secureCode, "200")
+            await userEvent.type(expYearInput, "30")
+            await userEvent.type(expMonthInput, "20")
+            await userEvent.click(button)
+    
+            const errorMessage = screen.getByText("Can't be blank")
+    
+            expect(errorMessage).toBeInTheDocument()
+        })
+
+        test("Should show a message if input card number is blank", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            const expMonthInput = screen.getByLabelText("EXP. DATE (MM/YY)", {selector: 'input'})
+            const expYearInput = screen.getByTestId("expiredDateYear")
+            const secureCode = screen.getByLabelText("CVC", {selector: 'input'})
+            const nameInput = screen.getByLabelText("CARDHOLDER NAME", {selector: 'input'})
+
+            await userEvent.type(nameInput, 'Andres Marquez')
+            await userEvent.type(secureCode, "200")
+            await userEvent.type(expYearInput, "30")
+            await userEvent.type(expMonthInput, "20")
+            await userEvent.click(button)
+    
+            await waitFor(() => {
+                expect(screen.queryByText("Wrong format, at least 16 digits")).not.toBeInTheDocument()
+                expect(screen.getByText("Can't be blank")).toBeInTheDocument()
+            }) 
+        })
+
+        test("Should show a message if input card expitarion month date is blank", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            const numberInput = screen.getByLabelText("CARD NUMBER", {selector: 'input'})
+            const expYearInput = screen.getByTestId("expiredDateYear")
+            const secureCode = screen.getByLabelText("CVC", {selector: 'input'})
+            const nameInput = screen.getByLabelText("CARDHOLDER NAME", {selector: 'input'})
+
+            await userEvent.type(nameInput, 'Andres Marquez')
+            await userEvent.type(numberInput, '0000001223444540')
+            await userEvent.type(secureCode, "200")
+            await userEvent.type(expYearInput, "30")
+            await userEvent.click(button)
+    
+            await waitFor(() => {
+                expect(screen.queryByText("Wrong format, just 2 digits")).not.toBeInTheDocument()
+                expect(screen.getByText("Can't be blank")).toBeInTheDocument()
+            }) 
+        })
+
+        test("Should show a message if input card expitarion year date is blank", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            const numberInput = screen.getByLabelText("CARD NUMBER", {selector: 'input'})
+            const expMonthInput = screen.getByLabelText("EXP. DATE (MM/YY)", {selector: 'input'})
+            const secureCode = screen.getByLabelText("CVC", {selector: 'input'})
+            const nameInput = screen.getByLabelText("CARDHOLDER NAME", {selector: 'input'})
+
+            await userEvent.type(nameInput, 'Andres Marquez')
+            await userEvent.type(numberInput, '0000001223444540')
+            await userEvent.type(secureCode, "200")
+            await userEvent.type(expMonthInput, "20")
+            await userEvent.click(button)
+    
+            await waitFor(() => {
+                expect(screen.queryByText("Wrong format, just 2 digits")).not.toBeInTheDocument()
+                expect(screen.getByText("Can't be blank")).toBeInTheDocument()
+            }) 
+        })
+
+        test("Should show a message if input card secure code is blank", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            const numberInput = screen.getByLabelText("CARD NUMBER", {selector: 'input'})
+            const expMonthInput = screen.getByLabelText("EXP. DATE (MM/YY)", {selector: 'input'})
+            const expYearInput = screen.getByTestId("expiredDateYear")
+            const nameInput = screen.getByLabelText("CARDHOLDER NAME", {selector: 'input'})
+
+            await userEvent.type(nameInput, 'Andres Marquez')
+            await userEvent.type(numberInput, '0000001223444540')
+            await userEvent.type(expYearInput, "30")
+            await userEvent.type(expMonthInput, "20")
+            await userEvent.click(button)
+    
+            await waitFor(() => {
+                expect(screen.queryByText("Wrong format, just 3 digits")).not.toBeInTheDocument()
+                expect(screen.getByText("Can't be blank")).toBeInTheDocument()
+            }) 
+        })
+    })
+    
+    describe("Validation input data", () => {
+        test("Should show an error message if the card number has less than 16 digits", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            const numberInput = screen.getByLabelText("CARD NUMBER", {selector: 'input'})
+    
+            await userEvent.type(numberInput, '000012345678901')
+    
+            await userEvent.click(button)
+    
+            await waitFor(() => expect(screen.getByText("Wrong format, at least 16 digits")).toBeInTheDocument()) 
+
+        })
+
+        test("Should show an error message if the card expiration month code has less than 2 digits", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            const expMonthInput = screen.getByLabelText("EXP. DATE (MM/YY)", {selector: 'input'})
+
+            await userEvent.type(expMonthInput, "2")
+
+            await userEvent.click(button)
+    
+            await waitFor(() => expect(screen.getByText("Wrong format, just 2 digits")).toBeInTheDocument()) 
+
+        })
+
+        test("Should show an error message if the card expiration year code has less than 2 digits", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            const expYearInput = screen.getByTestId("expiredDateYear")
+
+            await userEvent.type(expYearInput, "2")
+    
+            await userEvent.click(button)
+    
+            await waitFor(() => expect(screen.getByText("Wrong format, just 2 digits")).toBeInTheDocument()) 
+
+        })
+
+        test("Should show an error message if the card number has less than 16 digits", async() => {
+            render(<App />)
+    
+            const button = screen.getByRole('button')
+    
+            const secureCode = screen.getByLabelText("CVC", {selector: 'input'})
+
+            await userEvent.type(secureCode, "22")
+    
+            await userEvent.click(button)
+    
+            await waitFor(() => expect(screen.getByText("Wrong format, just 3 digits")).toBeInTheDocument()) 
+
+        })
     })
 })
