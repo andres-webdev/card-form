@@ -1,34 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {useState} from "react"
+import CardsSection from './components/cardsSection/CardsSection'
+import CongratsSection from './components/congratsSection/CongratsSection'
+import FormSection from './components/formSection/FormSection'
+import { GlobalState, HandleChangeCardInfo } from "./types"
+import { cardNumberSpaces } from "./handlers"
+
+const INITIAL_STATE =  {
+  cardName: "",
+  cardNumber: "",
+  expiredDateMonth: "",
+  expiredDateYear: "",
+  secureCode: ""
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [state, setState] = useState<GlobalState>({data: INITIAL_STATE, showCongrats: false})
+
+  const handleShowCongrats = ():void => {
+    setState(elem => ({
+      ...elem,
+      showCongrats: !state.showCongrats
+    }))
+  }
+
+  const handleChangeData = ({event, keyword}: HandleChangeCardInfo):void => {
+
+    let value = event.target.value
+
+    if(keyword !== true && event.target.name === "cardNumber") {
+      value = cardNumberSpaces(event.target.value)
+    }
+
+    setState(elem => ({
+      ...elem,
+      data: {
+        ...elem.data,
+        [event.target.name]: value
+      }
+    }))
+  }
+
+  const resetGlobalValues = ():void => {
+    setState({data: INITIAL_STATE, showCongrats: false})
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main 
+      className="w-full min-h-screen overflow-hidden lg:flex lg:flex-row">
+      <CardsSection cardInfo={state.data} />
+      {
+        !state.showCongrats && <FormSection showCongratsSection={handleShowCongrats} handleChange={handleChangeData} cardInfo={state.data} />
+      }
+      {  
+        state.showCongrats && <CongratsSection showFormSection={handleShowCongrats} resetState={resetGlobalValues} />
+      }
+    </main>
   )
 }
 
