@@ -60,10 +60,11 @@ export default function inputValidations (event: React.ChangeEvent<HTMLInputElem
                 })
 
                 if(validations.backSpace === true){
+                    console.log('backspace')
                     handleChange({event, keyword: true})
                 } else {
                     handleChange({event})
-                }
+                } 
             }
         }
             

@@ -28,6 +28,7 @@ export default function InputCardExpirationCodes({validations, cardExpirationMon
                     value={cardExpirationMonth}
                     placeholder="MM"
                     type="text" 
+                    inputMode="numeric"
                     onChange={handleChangeCardData}
                     maxLength={2}
                 />
@@ -37,6 +38,7 @@ export default function InputCardExpirationCodes({validations, cardExpirationMon
                     name="expiredDateYear"
                     placeholder="YY"
                     type="text"
+                    inputMode="numeric"
                     value={cardExpirationYear}
                     onChange={handleChangeCardData}
                     data-testid="expiredDateYear"

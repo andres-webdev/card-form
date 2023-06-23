@@ -20,6 +20,7 @@ export default function InputCardSecureCode({validations, handleChangeCardData, 
                 name="secureCode"
                 placeholder="e.g. 123"
                 type="text"
+                inputMode="numeric"
                 value={cardSecureCode}
                 onChange={handleChangeCardData}
                 maxLength={3}

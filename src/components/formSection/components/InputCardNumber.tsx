@@ -33,6 +33,7 @@ export default function InputCardNumber({validations, cardNumber, handleChangeCa
                 className={`w-full border rounded-lg px-4 py-padding-input-top-bottom text-18px leading-movil-input-text cursor-pointer ${(validations.inputChangeValidations.cardNumber || (validations.blankState && !cardNumber) || (validations.inputLenghtValidation && cardNumber.length < 19)) ? `border-inpur-error
                 text-inpur-error focus:border-inpur-error focus:border-2 focus:outline-none` : 'border-input-border'}`}
                 type="text"
+                inputMode="numeric"
                 id="cardNumber"
                 maxLength={19}
                 name="cardNumber"

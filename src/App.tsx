@@ -30,7 +30,7 @@ function App() {
 
     if(keyword !== true && event.target.name === "cardNumber") {
       value = cardNumberSpaces(event.target.value)
-    }
+    } 
 
     setState(elem => ({
       ...elem,
